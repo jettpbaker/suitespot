@@ -4,13 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "NODE_ENV=development next dev --turbopack",
+    "dev:prod": "NODE_ENV=production next dev --turbopack",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production next start",
     "lint": "next lint",
     "db:generate": "NODE_ENV=development drizzle-kit generate",
+    "db:generate:prod": "NODE_ENV=production drizzle-kit generate",
     "db:migrate": "NODE_ENV=development drizzle-kit migrate",
+    "db:migrate:prod": "NODE_ENV=production drizzle-kit migrate",
     "db:push": "NODE_ENV=development drizzle-kit push",
-    "db:studio": "NODE_ENV=development drizzle-kit studio"
+    "db:push:prod": "NODE_ENV=production drizzle-kit push",
+    "db:studio": "NODE_ENV=development drizzle-kit studio",
+    "db:studio:prod": "NODE_ENV=production drizzle-kit studio"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
