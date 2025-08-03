@@ -22,3 +22,5 @@ export const products_table = pgTable("products", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export type ProductsType = typeof products_table.$inferSelect;

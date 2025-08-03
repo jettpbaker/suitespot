@@ -6,3 +6,5 @@ export const categories_table = pgTable("categories", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export type CategoriesType = typeof categories_table.$inferSelect;
