@@ -108,10 +108,10 @@ const mockData: WishlistItem[] = [
 ];
 
 const priorityColors = {
-  Low: "bg-gray-800 text-gray-300",
-  Medium: "bg-blue-950 text-blue-300",
-  High: "bg-orange-950 text-orange-300",
-  "Must Have": "bg-red-950 text-red-300",
+  Low: "bg-white/5 text-zinc-300 ring-1 ring-white/10",
+  Medium: "bg-zinc-200/10 text-zinc-200 ring-1 ring-white/10",
+  High: "bg-zinc-100/15 text-zinc-100 ring-1 ring-white/10",
+  "Must Have": "bg-white/20 text-white ring-1 ring-white/20",
 };
 
 export default function HomeOfficeWishlist() {
@@ -141,119 +141,135 @@ export default function HomeOfficeWishlist() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-black p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            Home Office Wishlist
-          </h1>
-          <p className="text-gray-300 mb-4">
-            Transform your WFH space into an inspiring workspace
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-black via-black to-zinc-950 text-zinc-100">
+      {/* Soft vignette */}
+      <div className="pointer-events-none fixed inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_65%)]" />
 
-          <div className="flex flex-wrap gap-4 items-center justify-between bg-black p-4 rounded-lg shadow-lg border border-gray-800">
-            <div className="flex gap-6 text-sm">
-              <div>
-                <span className="font-medium text-white">{items.length}</span>
-                <span className="text-gray-400 ml-1">items</span>
-              </div>
-              <div>
-                <span className="font-medium text-white">
-                  ${totalValue.toFixed(2)}
-                </span>
-                <span className="text-gray-400 ml-1">total value</span>
-              </div>
-              <div>
-                <span className="font-medium text-white">
-                  {highPriorityCount}
-                </span>
-                <span className="text-gray-400 ml-1">high priority</span>
-              </div>
+      <div className="mx-auto max-w-7xl px-4 py-8">
+        {/* Top Bar */}
+        <div className="mb-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-2xl">
+          <div className="flex flex-col gap-4 p-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold tracking-tight">
+                Home Office Wishlist
+              </h1>
+              <p className="mt-1 text-sm text-zinc-400">
+                Transform your WFH space into an inspiring workspace
+              </p>
             </div>
 
-            <div className="flex gap-2">
-              <Select value={filterBy} onValueChange={setFilterBy}>
-                <SelectTrigger className="w-32">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Items</SelectItem>
-                  <SelectItem value="furniture">Furniture</SelectItem>
-                  <SelectItem value="tech">Tech</SelectItem>
-                  <SelectItem value="plants">Plants</SelectItem>
-                  <SelectItem value="storage">Storage</SelectItem>
-                  <SelectItem value="decor">Decor</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-6 rounded-xl border border-white/10 bg-white/5 px-4 py-2">
+                <div className="text-sm">
+                  <span className="font-medium text-white">{items.length}</span>
+                  <span className="ml-1 text-zinc-400">items</span>
+                </div>
+                <div className="h-4 w-px bg-white/10" />
+                <div className="text-sm">
+                  <span className="font-medium text-white">
+                    ${totalValue.toFixed(2)}
+                  </span>
+                  <span className="ml-1 text-zinc-400">total</span>
+                </div>
+                <div className="h-4 w-px bg-white/10" />
+                <div className="text-sm">
+                  <span className="font-medium text-white">
+                    {highPriorityCount}
+                  </span>
+                  <span className="ml-1 text-zinc-400">high priority</span>
+                </div>
+              </div>
 
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-36">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="priority">Priority</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex items-center gap-2">
+                <Select value={filterBy} onValueChange={setFilterBy}>
+                  <SelectTrigger className="w-36 rounded-xl border-white/10 bg-white/5 text-zinc-200 backdrop-blur-xl hover:bg-white/10">
+                    <Filter className="mr-2 h-4 w-4 text-zinc-400" />
+                    <SelectValue placeholder="Filter" />
+                  </SelectTrigger>
+                  <SelectContent className="backdrop-blur-xl">
+                    <SelectItem value="all">All Items</SelectItem>
+                    <SelectItem value="furniture">Furniture</SelectItem>
+                    <SelectItem value="tech">Tech</SelectItem>
+                    <SelectItem value="plants">Plants</SelectItem>
+                    <SelectItem value="storage">Storage</SelectItem>
+                    <SelectItem value="decor">Decor</SelectItem>
+                  </SelectContent>
+                </Select>
 
-              <Button className="bg-blue-600 hover:bg-blue-500">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Item
-              </Button>
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-40 rounded-xl border-white/10 bg-white/5 text-zinc-200 backdrop-blur-xl hover:bg-white/10">
+                    <SelectValue placeholder="Sort" />
+                  </SelectTrigger>
+                  <SelectContent className="backdrop-blur-xl">
+                    <SelectItem value="priority">Priority</SelectItem>
+                    <SelectItem value="price-low">
+                      Price: Low to High
+                    </SelectItem>
+                    <SelectItem value="price-high">
+                      Price: High to Low
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button className="rounded-xl bg-white/10 px-3 text-sm text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] backdrop-blur-xl transition-colors hover:bg-white/15">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Item
+                </Button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Items Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sortedAndFilteredItems.map((item) => (
             <Card
-              className="group cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-1 bg-gray-900 border-gray-800 py-0"
               key={item.id}
+              className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-0 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
             >
               <CardHeader className="p-0">
-                <div className="relative overflow-hidden rounded-t-lg">
+                <div className="relative">
                   <Image
                     src={item.image || "/placeholder.svg"}
                     alt={item.title}
-                    width={300}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200"
+                    width={600}
+                    height={400}
+                    className="h-44 w-full object-cover"
                   />
-                  <div className="absolute top-3 right-3">
-                    <Badge
-                      className={`${priorityColors[item.priority]} font-medium`}
-                    >
-                      {item.priority}
-                    </Badge>
-                  </div>
-                  <div className="absolute top-3 left-3">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 to-transparent" />
+                  <div className="absolute left-3 top-3 flex items-center gap-2">
                     <Badge
                       variant="secondary"
-                      className="bg-black/90 text-gray-300"
+                      className="rounded-full bg-black/50 px-2.5 py-1 text-[11px] text-zinc-200 ring-1 ring-white/10 backdrop-blur-md"
                     >
                       {item.category}
+                    </Badge>
+                  </div>
+                  <div className="absolute right-3 top-3">
+                    <Badge
+                      className={`rounded-full px-2.5 py-1 text-[11px] ${
+                        priorityColors[item.priority]
+                      }`}
+                    >
+                      {item.priority}
                     </Badge>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className="p-4">
-                <CardTitle className="text-lg font-semibold text-white mb-2 line-clamp-2">
+                <CardTitle className="mb-1 line-clamp-2 text-base font-medium tracking-tight text-zinc-100">
                   {item.title}
                 </CardTitle>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-gray-100">
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-xl font-semibold text-white">
                     ${item.price}
                   </span>
                   <Button
                     variant="ghost"
-                    size="sm"
-                    className="text-gray-400 hover:text-red-500"
+                    size="icon"
+                    className="h-8 w-8 rounded-full text-zinc-300 hover:bg-white/10 hover:text-zinc-100"
                   >
-                    <Heart className="w-4 h-4" />
+                    <Heart className="h-4 w-4" />
                   </Button>
                 </div>
               </CardContent>
@@ -262,8 +278,8 @@ export default function HomeOfficeWishlist() {
         </div>
 
         {sortedAndFilteredItems.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">
+          <div className="py-16 text-center">
+            <p className="text-zinc-400">
               No items found matching your filters.
             </p>
           </div>
