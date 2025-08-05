@@ -5,10 +5,11 @@ import Link from 'next/link'
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
+  const { id } = await params
   const product: ProductWithCategory = await DB.QUERIES.getProductById(
-    Number(params.id)
+    Number(id)
   )
 
   return (
