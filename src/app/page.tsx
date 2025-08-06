@@ -90,10 +90,12 @@ export default async function HomeOfficeWishlist() {
                 </SelectContent>
               </Select>
 
-              <Button className="rounded-xl bg-white/10 px-3 text-sm text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] backdrop-blur-xl transition-colors hover:bg-white/15">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Item
-              </Button>
+              <Link href="/add">
+                <Button className="rounded-xl bg-white/10 px-3 text-sm text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] backdrop-blur-xl transition-colors hover:bg-white/15">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Item
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
