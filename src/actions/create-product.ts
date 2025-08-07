@@ -27,8 +27,9 @@ export default async function createProduct(
 ): Promise<ActionState> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const { name, description, price, image, priority, category, new_category } =
+  const { name, description, price, priority, category, new_category } =
     Object.fromEntries(formData)
+  const image = formData.get('image') as File
 
   console.log(name, description, price, image, priority, category, new_category)
 
@@ -43,8 +44,7 @@ export default async function createProduct(
     fieldErrors.price = 'Price is required'
   }
 
-  const imageFile = image as File
-  if (!imageFile || !imageFile.size) {
+  if (!image || !image.size) {
     fieldErrors.image = 'Image is required'
   }
 
