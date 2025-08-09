@@ -1,6 +1,6 @@
 import { db } from './db'
-import { categories_table } from './schema/categories'
-import { products_table } from './schema/products'
+import { categories_table, CategoriesType } from './schema/categories'
+import { products_table, ProductsInsertType } from './schema/products'
 import { eq } from 'drizzle-orm'
 
 export const DB = {
@@ -42,9 +42,28 @@ export const DB = {
         .where(eq(products_table.id, id))
       return product[0]
     },
+    getCategories: async () => {
+      const categories = await db.select().from(categories_table)
+      return categories
+    },
   },
 
-  MUTATIONS: {},
+  MUTATIONS: {
+    createProduct: async (product: ProductsInsertType) => {
+      const [newProduct] = await db
+        .insert(products_table)
+        .values(product)
+        .returning()
+      return newProduct
+    },
+    createCategory: async (name: string): Promise<CategoriesType> => {
+      const [category] = await db
+        .insert(categories_table)
+        .values({ name })
+        .returning()
+      return category
+    },
+  },
 }
 
 export type ProductsWithCategory = Awaited<

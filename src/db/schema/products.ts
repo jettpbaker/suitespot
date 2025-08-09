@@ -16,8 +16,10 @@ export const products_table = pgTable('products', {
   description: text('description'),
   priority: priorityEnum('priority').notNull().default('medium'),
   price: integer('price').notNull(),
-  image: text('image'),
-  categoryId: integer('category_id').references(() => categories_table.id),
+  image: text('image').notNull(),
+  categoryId: integer('category_id')
+    .references(() => categories_table.id)
+    .notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 })
