@@ -23,6 +23,7 @@ const priorityColors = {
 
 export default async function HomeOfficeWishlist() {
   const productData: ProductsWithCategory = await DB.QUERIES.getProducts()
+  console.log(productData)
 
   const products = productData.map((product) => ({
     ...product,

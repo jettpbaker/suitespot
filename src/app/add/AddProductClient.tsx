@@ -50,11 +50,6 @@ export default function AddProductClient({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {state?.success && (
-            <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
-              {state.success}
-            </div>
-          )}
           <form action={formAction}>
             {/* Basic Information */}
             <div className="mb-4">
@@ -71,7 +66,7 @@ export default function AddProductClient({
                     placeholder="Enter product name"
                     className={state?.fieldErrors?.name ? 'border-white' : ''}
                   />
-                  <p className="text-sm text-white min-h-[1.25rem] mt-1">
+                  <p className="text-sm text-white min-h-[1.25rem]">
                     {state?.fieldErrors?.name || ''}
                   </p>
                 </div>
@@ -88,7 +83,7 @@ export default function AddProductClient({
                     min="0"
                     className={state?.fieldErrors?.price ? 'border-white' : ''}
                   />
-                  <p className="text-sm text-white min-h-[1.25rem] mt-1">
+                  <p className="text-sm text-white min-h-[1.25rem]">
                     {state?.fieldErrors?.price || ''}
                   </p>
                 </div>
@@ -115,7 +110,10 @@ export default function AddProductClient({
                   accept="image/*"
                   className={state?.fieldErrors?.image ? 'border-white' : ''}
                 />
-                <p className="text-sm text-white min-h-[1.25rem] mt-1">
+                <p className="text-sm text-gray-400 min-h-[1.25rem]">
+                  Max 4.5MB
+                </p>
+                <p className="text-sm text-white min-h-[1.25rem]">
                   {state?.fieldErrors?.image || ''}
                 </p>
               </div>
@@ -145,14 +143,14 @@ export default function AddProductClient({
                     </SelectContent>
                   </Select>
                 </div>
-                <p className="text-sm text-white min-h-[1.25rem] mt-1">
+                <p className="text-sm text-white min-h-[1.25rem]">
                   {state?.fieldErrors?.priority || ''}
                 </p>
               </div>
             </div>
 
             {/* Category Selection */}
-            <div className="mb-8">
+            <div>
               <h3 className="text-lg font-medium mb-2">Category</h3>
               <Tabs defaultValue="existing" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-2">
@@ -201,7 +199,7 @@ export default function AddProductClient({
                   />
                 </TabsContent>
               </Tabs>
-              <p className="text-sm text-white min-h-[1.25rem] mt-1">
+              <p className="text-sm text-white min-h-[1.25rem]">
                 {state?.fieldErrors?.category || ''}
               </p>
             </div>
