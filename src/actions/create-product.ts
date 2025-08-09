@@ -3,6 +3,7 @@
 import { put } from '@vercel/blob'
 import { env } from '@/env'
 import { DB } from '@/db/queries'
+import { revalidatePath } from 'next/cache'
 
 type FieldErrors = {
   name?: string
@@ -94,6 +95,7 @@ export default async function createProduct(
       categoryId: Number(categoryId),
     })
 
+    await revalidatePath('/')
     return { success: 'Product created successfully' }
   } catch (err) {
     console.error('Create product failed:', err)

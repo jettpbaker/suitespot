@@ -22,7 +22,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import createProduct from '@/actions/create-product'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 type Category = { id: number; name: string }
 
@@ -32,6 +33,13 @@ export default function AddProductClient({
   categories: Category[]
 }) {
   const [state, formAction, pending] = useActionState(createProduct, null)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push('/')
+    }
+  }, [state?.success, router])
 
   return (
     <div className="max-w-2xl mx-auto p-6">
