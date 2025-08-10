@@ -21,6 +21,8 @@ const priorityColors = {
   'Must Have': 'bg-white/20 text-white ring-1 ring-white/20',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomeOfficeWishlist() {
   const productData: ProductsWithCategory = await DB.QUERIES.getProducts()
   console.log(productData)
