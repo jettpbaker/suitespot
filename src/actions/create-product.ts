@@ -1,22 +1,22 @@
 'use server'
 
-import { put } from '@vercel/blob'
-import { env } from '@/env'
 import { DB } from '@/db/queries'
 import { revalidatePath } from 'next/cache'
-
-type FieldErrors = {
-  name?: string
-  price?: string
-  priority?: string
-  category?: string
-  image?: string
-}
+import type { FieldErrors as ProductFieldErrors } from '@/lib/product-validation'
+import {
+  parsePriceInCents,
+  validatePriority,
+  validateRequiredFields,
+} from '@/lib/product-validation'
+import { resolveCategoryId } from '@/lib/category'
+import { uploadProductImage } from '@/lib/image-upload'
+import { extractProductFormData } from '@/lib/product-form'
+import { fieldErrorResponse } from '@/lib/action-helpers'
 
 type ActionState =
   | {
       error: string
-      fieldErrors?: FieldErrors
+      fieldErrors?: ProductFieldErrors
       success?: undefined
     }
   | {
@@ -30,66 +30,54 @@ export default async function createProduct(
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
-  const name = (formData.get('name') ?? '').toString().trim()
-  const description = (formData.get('description') ?? '').toString().trim()
-  const priceRaw = (formData.get('price') ?? '').toString().trim()
-  const priority = (formData.get('priority') ?? '').toString().trim()
-  let categoryId = (formData.get('categoryId') ?? '').toString().trim()
-  const newCategory = (formData.get('new-category') ?? '').toString().trim()
-  const image = formData.get('image') as File | null
+  const {
+    name,
+    description,
+    priceRaw,
+    priority,
+    categoryId: rawCategoryId,
+    newCategory,
+    image,
+  } = extractProductFormData(formData)
+  let categoryId = rawCategoryId
 
-  const fieldErrors: FieldErrors = {}
-
-  if (!name) fieldErrors.name = 'Product name is required'
-  if (!priceRaw) fieldErrors.price = 'Price is required'
-  if (!priority) fieldErrors.priority = 'Priority is required'
-  if (!image || !image.size) fieldErrors.image = 'Image is required'
-  if (!categoryId && !newCategory) fieldErrors.category = 'Category is required'
+  const fieldErrors: ProductFieldErrors = validateRequiredFields({
+    name,
+    priceRaw,
+    priority,
+    image,
+    categoryId,
+    newCategory,
+  })
 
   if (Object.keys(fieldErrors).length > 0) {
+    return fieldErrorResponse(fieldErrors)
+  }
+
+  const priorityError = validatePriority(priority)
+  if (priorityError) {
     return {
       error: 'Please fix the errors below',
-      fieldErrors,
+      fieldErrors: { priority: priorityError },
     }
   }
 
-  if (priority !== 'low' && priority !== 'medium' && priority !== 'high') {
-    return {
-      error: 'Please fix the errors below',
-      fieldErrors: { priority: 'Priority must be low, medium, or high' },
-    }
+  const priceParsed = parsePriceInCents(priceRaw)
+  if ('error' in priceParsed) {
+    return fieldErrorResponse({ price: priceParsed.error })
   }
+  const priceInCents = priceParsed.priceInCents
 
-  const priceNumber = Number.parseFloat(priceRaw)
-  if (Number.isNaN(priceNumber) || priceNumber < 0) {
-    return {
-      error: 'Please fix the errors below',
-      fieldErrors: { price: 'Enter a valid price' },
-    }
-  }
-  const priceInCents = Math.round(priceNumber * 100)
+  categoryId = await resolveCategoryId(categoryId, newCategory)
 
-  if (newCategory && !categoryId) {
-    const newCategoryId = await DB.MUTATIONS.createCategory(newCategory)
-    categoryId = newCategoryId.id.toString()
-  }
-
-  console.log('Trying to upload image...')
   try {
     const fileToUpload = image as File
-    const uploadKey = `products/${Date.now()}-${fileToUpload.name}`
-    const blob = await put(uploadKey, fileToUpload, {
-      access: 'public',
-      contentType: fileToUpload.type || 'application/octet-stream',
-      addRandomSuffix: true,
-      token: env.BLOB_READ_WRITE_TOKEN,
-    })
-    console.log(blob)
+    const blob = await uploadProductImage(fileToUpload)
 
     await DB.MUTATIONS.createProduct({
       name,
       description,
-      priority,
+      priority: priority as 'low' | 'medium' | 'high',
       price: priceInCents,
       image: blob.url,
       categoryId: Number(categoryId),
