@@ -12,8 +12,10 @@ export const priorityEnum = pgEnum('priority', ['low', 'medium', 'high'])
 
 export const products_table = pgTable('products', {
   id: serial('id').primaryKey(),
+  ownerId: text('owner_id').notNull(),
   name: text('name').notNull(),
   description: text('description'),
+  url: text('url').notNull(),
   priority: priorityEnum('priority').notNull().default('medium'),
   price: integer('price').notNull(),
   image: text('image').notNull(),

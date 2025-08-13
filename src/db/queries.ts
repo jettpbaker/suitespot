@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 
 export const DB = {
   QUERIES: {
-    getProducts: async () => {
+    getProductsForUser: async (userId: string) => {
       const products = await db
         .select({
           id: products_table.id,
@@ -20,6 +20,7 @@ export const DB = {
           categories_table,
           eq(products_table.categoryId, categories_table.id)
         )
+        .where(eq(products_table.ownerId, userId))
         .orderBy(products_table.id)
       return products
     },
@@ -67,7 +68,7 @@ export const DB = {
 }
 
 export type ProductsWithCategory = Awaited<
-  ReturnType<typeof DB.QUERIES.getProducts>
+  ReturnType<typeof DB.QUERIES.getProductsForUser>
 >
 
 export type ProductWithCategory = Awaited<
