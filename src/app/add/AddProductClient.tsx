@@ -29,8 +29,10 @@ type Category = { id: number; name: string }
 
 export default function AddProductClient({
   categories,
+  ownerId,
 }: {
   categories: Category[]
+  ownerId: string
 }) {
   const [state, formAction, pending] = useActionState(createProduct, null)
   const router = useRouter()
@@ -59,6 +61,7 @@ export default function AddProductClient({
         </CardHeader>
         <CardContent>
           <form action={formAction}>
+            <input type="hidden" name="ownerId" value={ownerId} />
             {/* Basic Information */}
             <div className="mb-4">
               <h3 className="text-lg font-medium mb-2">Basic Information</h3>
@@ -106,6 +109,20 @@ export default function AddProductClient({
                   placeholder="Enter product description"
                   className="min-h-20 resize-none"
                 />
+              </div>
+              <div className="mb-4">
+                <Label htmlFor="url" className="block mb-2">
+                  URL
+                </Label>
+                <Input
+                  id="url"
+                  name="url"
+                  placeholder="Enter product URL"
+                  className={state?.fieldErrors?.url ? 'border-white' : ''}
+                />
+                <p className="text-sm text-white min-h-[1.25rem]">
+                  {state?.fieldErrors?.url || ''}
+                </p>
               </div>
               <div>
                 <Label htmlFor="picture" className="block mb-2">

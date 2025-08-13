@@ -4,6 +4,7 @@ export type FieldErrors = {
   priority?: string
   category?: string
   image?: string
+  url?: string
 }
 
 type RequiredFieldParams = {
@@ -13,12 +14,14 @@ type RequiredFieldParams = {
   image: File | null
   categoryId: string
   newCategory: string
+  url: string
 }
 
 export function validateRequiredFields(
   params: RequiredFieldParams
 ): FieldErrors {
-  const { name, priceRaw, priority, image, categoryId, newCategory } = params
+  const { name, priceRaw, priority, image, categoryId, newCategory, url } =
+    params
   const fieldErrors: FieldErrors = {}
 
   if (!name) fieldErrors.name = 'Product name is required'
@@ -26,6 +29,7 @@ export function validateRequiredFields(
   if (!priority) fieldErrors.priority = 'Priority is required'
   if (!image || !image.size) fieldErrors.image = 'Image is required'
   if (!categoryId && !newCategory) fieldErrors.category = 'Category is required'
+  if (!url) fieldErrors.url = 'URL is required'
 
   return fieldErrors
 }

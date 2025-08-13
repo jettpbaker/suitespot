@@ -31,6 +31,7 @@ export default async function createProduct(
   formData: FormData
 ): Promise<ActionState> {
   const {
+    ownerId,
     name,
     description,
     priceRaw,
@@ -38,6 +39,7 @@ export default async function createProduct(
     categoryId: rawCategoryId,
     newCategory,
     image,
+    url,
   } = extractProductFormData(formData)
   let categoryId = rawCategoryId
 
@@ -48,6 +50,7 @@ export default async function createProduct(
     image,
     categoryId,
     newCategory,
+    url,
   })
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -75,15 +78,17 @@ export default async function createProduct(
     const blob = await uploadProductImage(fileToUpload)
 
     await DB.MUTATIONS.createProduct({
+      ownerId,
       name,
       description,
+      url,
       priority: priority as 'low' | 'medium' | 'high',
       price: priceInCents,
       image: blob.url,
       categoryId: Number(categoryId),
     })
 
-    await revalidatePath('/')
+    revalidatePath('/')
     return { success: 'Product created successfully' }
   } catch (err) {
     console.error('Create product failed:', err)
