@@ -42,9 +42,9 @@ export default async function HomeOfficeWishlist() {
 
   return (
     <div className="mx-auto max-w-[200rem] px-16 py-8">
-      <ProductsGrid products={products} />
-
       {products.length === 0 && <EmptyState />}
+
+      <ProductsGrid products={products} />
     </div>
   )
 }
