@@ -51,7 +51,7 @@ export default async function ProductsGrid({ userId }: { userId: string }) {
   const allProducts: FormattedProduct[] = [...products, ...dummyProducts]
 
   return (
-    <div className="h-full overflow-y-auto minimal-scrollbar p-6">
+    <div className="h-full w-full minimal-scrollbar p-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
         {allProducts.length === 0 && <EmptyState />}
 
