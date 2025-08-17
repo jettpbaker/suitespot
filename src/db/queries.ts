@@ -13,6 +13,8 @@ export const DB = {
           priority: products_table.priority,
           price: products_table.price,
           image: products_table.image,
+          width: products_table.width,
+          height: products_table.height,
           category: categories_table.name,
         })
         .from(products_table)

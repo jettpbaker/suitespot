@@ -19,6 +19,8 @@ export const products_table = pgTable('products', {
   priority: priorityEnum('priority').notNull().default('medium'),
   price: integer('price').notNull(),
   image: text('image').notNull(),
+  width: integer('width').notNull(),
+  height: integer('height').notNull(),
   categoryId: integer('category_id')
     .references(() => categories_table.id)
     .notNull(),

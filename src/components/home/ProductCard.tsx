@@ -19,15 +19,15 @@ type ProductCardProps = {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <Link href={`/p/${product.id}`}>
-      <Card className="group overflow-hidden border border-white/10 bg-white/5 p-0 backdrop-blur-2xl transition-colors hover:border-white/30 hover:bg-white/8">
+    <Link href={`/p/${product.id}`} className="w-full">
+      <Card className="group overflow-hidden border border-white/10 bg-white/5 p-0 backdrop-blur-2xl transition-colors hover:border-white/30 hover:bg-white/8 h-full flex flex-col">
         <CardHeader className="p-0">
           <div className="relative">
             <Image
               src={product.image || '/placeholder.svg'}
               alt={product.name}
-              width={600}
-              height={400}
+              width={product.width}
+              height={product.height}
               className="h-52 w-full object-cover"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 to-transparent" />
@@ -52,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="p-4 pt-0">
+        <CardContent className="p-4 pt-0 flex-1 flex flex-col justify-between">
           <CardTitle className="mb-1 line-clamp-2 text-base font-medium tracking-tight text-zinc-100">
             {product.name}
           </CardTitle>

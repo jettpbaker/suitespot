@@ -1,5 +1,6 @@
 'use server'
 
+import sizeOf from 'image-size'
 import { DB } from '@/db/queries'
 import { revalidatePath } from 'next/cache'
 import type { FieldErrors as ProductFieldErrors } from '@/lib/product-validation'
@@ -74,8 +75,13 @@ export default async function createProduct(
   categoryId = await resolveCategoryId(categoryId, newCategory)
 
   try {
-    const fileToUpload = image as File
-    const blob = await uploadProductImage(fileToUpload)
+    const imageToUpload = image as File
+    const blob = await uploadProductImage(imageToUpload)
+
+    console.time('image-size')
+    const imageBuffer = await imageToUpload.arrayBuffer()
+    const { width, height } = sizeOf(new Uint8Array(imageBuffer))
+    console.timeEnd('image-size')
 
     await DB.MUTATIONS.createProduct({
       ownerId,
@@ -85,6 +91,8 @@ export default async function createProduct(
       priority: priority as 'low' | 'medium' | 'high',
       price: priceInCents,
       image: blob.url,
+      width,
+      height,
       categoryId: Number(categoryId),
     })
 
