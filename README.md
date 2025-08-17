@@ -6,4 +6,5 @@
 - [ ] Landing page?
 
 - [ ] Nicer UI
-  - [ ] Break out cards
+  - [x] Break out cards
+  - [ ] No need for the sidebar
