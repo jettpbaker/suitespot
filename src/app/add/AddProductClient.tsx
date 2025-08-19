@@ -46,7 +46,7 @@ export default function AddProductClient({
   return (
     <div
       className="max-w-2xl mx-auto p-6"
-      style={{ height: `calc(100vh - 93px)` }}
+      style={{ height: `calc(100% - 93px)` }}
     >
       <Card>
         <CardHeader>

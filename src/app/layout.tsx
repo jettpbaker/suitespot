@@ -27,9 +27,10 @@ export default async function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dark">
+      <html lang="en" className="dark h-full">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full min-h-full min-w-full`}
+          style={{ '--topbar-height': '93px' } as React.CSSProperties}
         >
           {/* <header className="p-4 flex gap-3 items-center border-b border-neutral-800">
             <SignedOut>
@@ -41,9 +42,14 @@ export default async function RootLayout({
             </SignedIn>
           </header> */}
 
-          <div className="w-full h-full min-h-full min-w-full z-10 bg-black rounded-lg flex flex-col">
+          <div className="w-full h-full min-h-full min-w-full bg-black">
             <TopBar />
-            <main className="flex-1 min-h-0">{children}</main>
+            <main
+              className="w-full h-full"
+              style={{ paddingTop: 'var(--topbar-height)' }}
+            >
+              {children}
+            </main>
             <Toaster />
           </div>
         </body>

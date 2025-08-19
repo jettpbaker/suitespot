@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function TopBar() {
   return (
-    <div className="sticky top-0 z-50 border-b border-neutral-800 bg-white/5 backdrop-blur-md">
+    <div className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-800 bg-white/5 backdrop-blur-md">
       <div className="flex flex-col gap-4 py-4 px-8 md:flex-row md:items-center md:justify-between">
         <div>
           <Link href="/">

@@ -15,10 +15,7 @@ export default async function ProductPage({
   )
 
   return (
-    <div
-      className="w-full flex flex-col lg:flex-row overflow-hidden"
-      style={{ height: `calc(100vh - 93px)` }}
-    >
+    <div className="w-full h-full flex flex-col lg:flex-row overflow-hidden">
       <div className="relative w-full lg:w-1/2 h-80 lg:h-full border-b lg:border-b-0 lg:border-r border-white/10">
         <Image
           src={product.image || '/placeholder.svg'}
