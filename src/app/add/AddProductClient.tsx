@@ -44,7 +44,10 @@ export default function AddProductClient({
   }, [state?.success, router])
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div
+      className="max-w-2xl mx-auto p-6"
+      style={{ height: `calc(100vh - 93px)` }}
+    >
       <Card>
         <CardHeader>
           <CardTitle>Add New Product</CardTitle>

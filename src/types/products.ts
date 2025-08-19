@@ -3,7 +3,7 @@ export type FormattedProduct = {
   name: string
   price: number
   priority: string
-  image: string | null
+  image: string
   width: number
   height: number
   category: string | null

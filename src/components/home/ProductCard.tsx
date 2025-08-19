@@ -4,13 +4,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { FormattedProduct } from '@/types/products'
 import DeleteCard from './DeleteCard'
+import { formatPrice, formatPriority } from '@/lib/formats'
+import { cn } from '@/lib/utils'
 
-const priorityColors = {
-  Low: 'bg-white/5 text-zinc-300 ring-1 ring-white/10',
-  Medium: 'bg-zinc-200/10 text-zinc-200 ring-1 ring-white/10',
-  High: 'bg-zinc-100/15 text-zinc-100 ring-1 ring-white/10',
-  'Must Have': 'bg-white/20 text-white ring-1 ring-white/20',
-} as const
+const getPriorityStyles = (priority: string) => {
+  switch (priority.toLowerCase()) {
+    case 'low':
+      return 'bg-green-500/20 text-green-100 ring-1 ring-green-400/30'
+    case 'medium':
+      return 'bg-orange-500/20 text-orange-100 ring-1 ring-orange-400/30'
+    case 'high':
+      return 'bg-red-500/20 text-red-100 ring-1 ring-red-400/30'
+    default:
+      return 'bg-zinc-500/20 text-zinc-100 ring-1 ring-zinc-400/30'
+  }
+}
 
 type ProductCardProps = {
   product: FormattedProduct
@@ -23,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <CardHeader className="p-0">
           <div className="relative">
             <Image
-              src={product.image || '/placeholder.svg'}
+              src={product.image}
               alt={product.name}
               width={product.width}
               height={product.height}
@@ -40,13 +48,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
             <div className="absolute right-3 top-3">
               <Badge
-                className={`rounded-full px-2.5 py-1 text-[11px] ${
-                  priorityColors[
-                    product.priority as keyof typeof priorityColors
-                  ]
-                }`}
+                className={cn(
+                  'rounded-full px-2.5 py-1 text-[11px] backdrop-blur-sm font-bold',
+                  getPriorityStyles(product.priority)
+                )}
               >
-                {product.priority}
+                {formatPriority(product.priority)}
               </Badge>
             </div>
           </div>
@@ -57,9 +64,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           </CardTitle>
           <div className="mt-3 flex items-center justify-between">
             <span className="text-xl font-semibold text-white">
-              ${product.price}
+              ${formatPrice(product.price)}
             </span>
-            <DeleteCard productId={product.id} />
+            <DeleteCard productId={product.id} imageUrl={product.image} />
           </div>
         </CardContent>
       </Card>

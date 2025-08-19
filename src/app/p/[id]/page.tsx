@@ -59,7 +59,7 @@ export default async function ProductPage({
             </h1>
           )}
           <div className="text-2xl md:text-3xl font-bold text-white">
-            ${formatPrice(product.price).toFixed(2)}
+            ${formatPrice(product.price)}
           </div>
         </div>
 
@@ -69,7 +69,7 @@ export default async function ProductPage({
           <p className="text-zinc-400">{formatPriority(product.priority)}</p>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 max-w-1/3">
           <p className="text-zinc-400 leading-relaxed">
             {product.description || 'No description provided.'}
           </p>

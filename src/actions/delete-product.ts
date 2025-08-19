@@ -3,6 +3,7 @@
 import { DB } from '@/db/queries'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@clerk/nextjs/server'
+import { del } from '@vercel/blob'
 
 type ActionState =
   | {
@@ -26,13 +27,20 @@ export default async function deleteProduct(
   }
 
   const productId = formData.get('productId')
+  const imageUrl = formData.get('imageUrl')
 
-  if (!productId || typeof productId !== 'string') {
-    return { error: 'Product ID is required' }
+  if (
+    !productId ||
+    typeof productId !== 'string' ||
+    !imageUrl ||
+    typeof imageUrl !== 'string'
+  ) {
+    return { error: 'Product ID & image URL are required' }
   }
 
   try {
     await DB.MUTATIONS.deleteProduct(Number(productId))
+    del(imageUrl)
     revalidatePath('/')
     return { success: 'Product deleted successfully' }
   } catch (err) {

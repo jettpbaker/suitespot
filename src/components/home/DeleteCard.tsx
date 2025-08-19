@@ -5,12 +5,19 @@ import { Trash2, Loader2 } from 'lucide-react'
 import { Button } from '../ui/button'
 import deleteProduct from '@/actions/delete-product'
 
-export default function DeleteCard({ productId }: { productId: number }) {
+export default function DeleteCard({
+  productId,
+  imageUrl,
+}: {
+  productId: number
+  imageUrl: string
+}) {
   const [state, formAction, isPending] = useActionState(deleteProduct, null)
 
   return (
     <form action={formAction} onClick={(e) => e.stopPropagation()}>
       <input type="hidden" name="productId" value={productId} />
+      <input type="hidden" name="imageUrl" value={imageUrl} />
       <Button
         type="submit"
         variant="ghost"
