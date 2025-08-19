@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import TopBar from '@/components/home/TopBar'
+import { Toaster } from '@/components/ui/sonner'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -43,6 +44,7 @@ export default async function RootLayout({
           <div className="w-full h-full min-h-full min-w-full z-10 bg-black rounded-lg flex flex-col">
             <TopBar />
             <main className="flex-1 min-h-0">{children}</main>
+            <Toaster />
           </div>
         </body>
       </html>

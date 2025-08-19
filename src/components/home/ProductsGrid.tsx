@@ -1,6 +1,7 @@
 import ProductCard from '@/components/home/ProductCard'
 import { DB } from '@/db/queries'
 import EmptyState from '@/components/home/EmptyState'
+import FloatingAddButton from '@/components/home/FloatingAddButton'
 import type { FormattedProduct } from '@/types/products'
 
 export default async function ProductsGrid({ userId }: { userId: string }) {
@@ -51,7 +52,7 @@ export default async function ProductsGrid({ userId }: { userId: string }) {
   const allProducts: FormattedProduct[] = [...products, ...dummyProducts]
 
   return (
-    <div className="h-full w-full minimal-scrollbar p-6">
+    <div className="relative h-full w-full p-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
         {allProducts.length === 0 && <EmptyState />}
 
@@ -59,6 +60,8 @@ export default async function ProductsGrid({ userId }: { userId: string }) {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
+      <FloatingAddButton />
     </div>
   )
 }

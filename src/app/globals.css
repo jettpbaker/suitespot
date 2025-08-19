@@ -144,3 +144,14 @@
 .minimal-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #737373;
 }
+
+/* Global text selection styling */
+::selection {
+  background-color: white;
+  color: black;
+}
+
+::-moz-selection {
+  background-color: white;
+  color: black;
+}

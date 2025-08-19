@@ -1,10 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Heart } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import type { FormattedProduct } from '@/types/products'
+import DeleteCard from './DeleteCard'
 
 const priorityColors = {
   Low: 'bg-white/5 text-zinc-300 ring-1 ring-white/10',
@@ -60,13 +59,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-xl font-semibold text-white">
               ${product.price}
             </span>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 rounded-full text-zinc-300 hover:bg-white/10 hover:text-zinc-100"
-            >
-              <Heart className="h-4 w-4" />
-            </Button>
+            <DeleteCard productId={product.id} />
           </div>
         </CardContent>
       </Card>

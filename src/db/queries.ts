@@ -32,9 +32,12 @@ export const DB = {
           id: products_table.id,
           name: products_table.name,
           description: products_table.description,
+          url: products_table.url,
           priority: products_table.priority,
           price: products_table.price,
           image: products_table.image,
+          width: products_table.width,
+          height: products_table.height,
           category: categories_table.name,
         })
         .from(products_table)
@@ -65,6 +68,9 @@ export const DB = {
         .values({ name })
         .returning()
       return category
+    },
+    deleteProduct: async (id: number) => {
+      await db.delete(products_table).where(eq(products_table.id, id))
     },
   },
 }

@@ -45,13 +45,6 @@ export default function AddProductClient({
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <Link
-        href="/"
-        className="text-sm text-gray-400 hover:text-gray-300 mb-6 flex items-center gap-2"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Wishlist
-      </Link>
       <Card>
         <CardHeader>
           <CardTitle>Add New Product</CardTitle>
