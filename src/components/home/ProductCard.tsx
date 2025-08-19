@@ -35,7 +35,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               alt={product.name}
               width={product.width}
               height={product.height}
-              className="h-52 w-full object-cover"
+              className="sm:h-52 lg:h-60 xl:h-68 2xl:h-76 w-full object-cover object-center"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 to-transparent" />
             <div className="absolute left-3 top-3 flex items-center gap-2">
